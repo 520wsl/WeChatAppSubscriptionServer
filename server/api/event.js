@@ -17,6 +17,7 @@ router.post("/", async function(req, res, next) {
   let result = req.body;
   try {
     // 消息类型
+    log.fatal("-------------  ↓↓↓↓ 【接收事件推送】 ↓↓↓↓ -----------------");
     log.info(
       "1.【接收事件推送】--消息通知 ：",
       "\n\tmsgType:",
@@ -25,9 +26,11 @@ router.post("/", async function(req, res, next) {
       JSON.stringify(result)
     );
     await event(result);
+    log.fatal("-------------  ↑↑↑↑ 【接收事件推送】 ↑↑↑↑  -----------------");
     res.send("success");
   } catch (error) {
     log.info("4. 【接收事件推送】--消息通知\n\t", error);
+    log.fatal("-------------  ↑↑↑↑ 【接收事件推送】 ↑↑↑↑  -----------------");
     if (error && (error.errcode == 42001 || error.errcode == 40001)) {
       console.log(42001);
       let tokenstatus = await tokenService.updateAccessToken();

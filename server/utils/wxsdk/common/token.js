@@ -2,7 +2,7 @@
  * @Author: Mad Dragon 395548460@qq.com 
  * @Date: 2018-11-06 17:42:11 
  * @Last Modified by: Mad Dragon
- * @Last Modified time: 2018-11-06 20:00:08
+ * @Last Modified time: 2018-11-07 10:34:54
  * @explanatory:  获取token
  */
 import fetch from "../fetch";
@@ -32,6 +32,9 @@ function wx_api(method, api_name, api_param) {
 // https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx54c9db07a722c304&secret=448a6bb6c202bf2ff61f99394a1981cc
 // 获取 access_token
 function api_token() {
+  log.fatal(
+    "-------------  ↓↓↓↓ 【common 获取access】 ↓↓↓↓ -----------------"
+  );
   log.info("  1. 【common 获取access】 获取 微信 配置！\n\t", JSON.stringify(config));
 
   return wx_get("token", {

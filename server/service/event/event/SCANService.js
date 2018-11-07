@@ -1,5 +1,6 @@
 import log from "../../../utils/log";
 import customService from "../../message/customService";
+import callbackScanTakeDelivery from "../../callback/scanTakeDelivery";
 //  用户已关注时的事件推送
 async function SCAN(params) {
   log.info(
@@ -33,7 +34,7 @@ async function SCAN(params) {
 
 // ScanTakeDelivery 事件处理接口 确认收货
 async function ScanTakeDelivery(eventKey, fromUserName) {
-  log.debug(
+  log.info(
     "6.  【扫描带参数二维码事件】--【用户已关注时的事件推送】--ScanTakeDelivery 事件处理接口 确认收货 \n\t",
     JSON.stringify(eventKey),
     fromUserName
@@ -44,11 +45,13 @@ async function ScanTakeDelivery(eventKey, fromUserName) {
     content:
       "【扫描带参数二维码事件】--【用户已关注时的事件推送】 --ScanTakeDelivery 事件处理接口 确认收货"
   };
+  let result =await callbackScanTakeDelivery.scanTakeDelivery();
+  log.fatal(result.data);
   return customService.sendHandler(params);
 }
 // BindAdminAccountNumber 事件处理接口 绑定管理员账号
 async function BindAdminAccountNumber(eventKey, fromUserName) {
-  log.debug(
+  log.info(
     "6.  【扫描带参数二维码事件】--【用户已关注时的事件推送】 --BindAdminAccountNumber 事件处理接口 绑定管理员账号 \n\t",
     JSON.stringify(eventKey),
     fromUserName
