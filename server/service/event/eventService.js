@@ -2,7 +2,7 @@
  * @Author: Mad Dragon 395548460@qq.com 
  * @Date: 2018-11-06 17:45:14 
  * @Last Modified by: Mad Dragon
- * @Last Modified time: 2018-11-06 22:00:40
+ * @Last Modified time: 2018-11-07 21:51:01
  * @explanatory:  【接收事件推送】 事件处理机制
  */
 import log from "../../utils/log";
@@ -17,6 +17,7 @@ async function eventHandler(params) {
         "3.【扫描带参数二维码事件】--关注事件: \n\t",
         "event：事件类型，subscribe(订阅)"
       );
+      return SCAN.SCAN(params);
       break;
     case "unsubscribe":
       log.info(

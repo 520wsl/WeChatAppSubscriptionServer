@@ -1,9 +1,9 @@
-import axios from "axios";
+import api from "../../utils/api.request";
 
-async function scanTakeDelivery(params) {
-  return axios.get("http://www.dianjiangla.com/common/islogin");
+async function postEventInfo(params) {
+  return await api.get("/class/child");
 }
 
 export default {
-  scanTakeDelivery
+  postEventInfo
 };

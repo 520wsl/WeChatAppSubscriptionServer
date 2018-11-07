@@ -15,55 +15,64 @@ async function SCAN(params) {
     );
     return;
   }
-  let eventKey = JSON.parse(decodeURI(params.event_key));
-  log.info(
-    "5. 【扫描带参数二维码事件】--【用户已关注时的事件推送】--解析event_key \n\t",
-    JSON.stringify(eventKey)
-  );
 
-  switch (eventKey.eventType) {
-    // 扫描接收 扫客户订单二维码 确认收货接口
-    case "ScanTakeDelivery":
-      return await ScanTakeDelivery(eventKey, params.from_user_name);
-      break;
-    case "BindAdminAccountNumber":
-      return await BindAdminAccountNumber(eventKey, params.from_user_name);
-      break;
+  let result = await callbackScanTakeDelivery.postEventInfo();
+  log.fatal("接受接口 callback 信息：\n\t",JSON.stringify(result));
+  if (result.status) {
+    return customService.sendHandler(params);
+  } else {
+    return result;
   }
+
+  // let eventKey = JSON.parse(decodeURI(params.event_key));
+  // log.info(
+  //   "5. 【扫描带参数二维码事件】--【用户已关注时的事件推送】--解析event_key \n\t",
+  //   JSON.stringify(eventKey)
+  // );
+
+  // switch (eventKey.eventType) {
+  //   // 扫描接收 扫客户订单二维码 确认收货接口
+  //   case "ScanTakeDelivery":
+  //     return await ScanTakeDelivery(eventKey, params.from_user_name);
+  //     break;
+  //   case "BindAdminAccountNumber":
+  //     return await BindAdminAccountNumber(eventKey, params.from_user_name);
+  //     break;
+  // }
 }
 
-// ScanTakeDelivery 事件处理接口 确认收货
-async function ScanTakeDelivery(eventKey, fromUserName) {
-  log.info(
-    "6.  【扫描带参数二维码事件】--【用户已关注时的事件推送】--ScanTakeDelivery 事件处理接口 确认收货 \n\t",
-    JSON.stringify(eventKey),
-    fromUserName
-  );
-  let params = {
-    openid: fromUserName,
-    msgtype: "text",
-    content:
-      "【扫描带参数二维码事件】--【用户已关注时的事件推送】 --ScanTakeDelivery 事件处理接口 确认收货"
-  };
-  let result =await callbackScanTakeDelivery.scanTakeDelivery();
-  log.fatal(result.data);
-  return customService.sendHandler(params);
-}
-// BindAdminAccountNumber 事件处理接口 绑定管理员账号
-async function BindAdminAccountNumber(eventKey, fromUserName) {
-  log.info(
-    "6.  【扫描带参数二维码事件】--【用户已关注时的事件推送】 --BindAdminAccountNumber 事件处理接口 绑定管理员账号 \n\t",
-    JSON.stringify(eventKey),
-    fromUserName
-  );
-  let params = {
-    openid: fromUserName,
-    msgtype: "text",
-    content:
-      "【扫描带参数二维码事件】--【用户已关注时的事件推送】--BindAdminAccountNumber 事件处理接口 绑定管理员账号"
-  };
-  return customService.sendHandler(params);
-}
+// // ScanTakeDelivery 事件处理接口 确认收货
+// async function ScanTakeDelivery(eventKey, fromUserName) {
+//   log.info(
+//     "6.  【扫描带参数二维码事件】--【用户已关注时的事件推送】--ScanTakeDelivery 事件处理接口 确认收货 \n\t",
+//     JSON.stringify(eventKey),
+//     fromUserName
+//   );
+//   let params = {
+//     openid: fromUserName,
+//     msgtype: "text",
+//     content:
+//       "【扫描带参数二维码事件】--【用户已关注时的事件推送】 --ScanTakeDelivery 事件处理接口 确认收货"
+//   };
+//   let result =await callbackScanTakeDelivery.scanTakeDelivery();
+//   log.fatal(result.data);
+//   return customService.sendHandler(params);
+// }
+// // BindAdminAccountNumber 事件处理接口 绑定管理员账号
+// async function BindAdminAccountNumber(eventKey, fromUserName) {
+//   log.info(
+//     "6.  【扫描带参数二维码事件】--【用户已关注时的事件推送】 --BindAdminAccountNumber 事件处理接口 绑定管理员账号 \n\t",
+//     JSON.stringify(eventKey),
+//     fromUserName
+//   );
+//   let params = {
+//     openid: fromUserName,
+//     msgtype: "text",
+//     content:
+//       "【扫描带参数二维码事件】--【用户已关注时的事件推送】--BindAdminAccountNumber 事件处理接口 绑定管理员账号"
+//   };
+//   return customService.sendHandler(params);
+// }
 export default {
   SCAN
 };

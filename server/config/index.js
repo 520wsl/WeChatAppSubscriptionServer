@@ -25,7 +25,11 @@ let config = {
       database: "wxapp",
       dialect: "mysql"
     }
-  }
+  },
+  baseUrl: {
+		dev: "http://www.dianjiangla.com/api",
+		pro: "http://www.dianjiangla.com/api"
+	},
 };
 
 let env = process.env.NODE_ENV || "development";
